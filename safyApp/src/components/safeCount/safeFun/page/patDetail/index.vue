@@ -1,0 +1,119 @@
+<template>
+	<div class="patDetail">
+		<mt-header fixed title="详情">
+			<router-link to="/safeCount/safeFun/pat" slot="left">
+				<mt-button icon="back">返回</mt-button>
+			</router-link>
+			<div slot="right">
+				<p v-if="" @click="">编辑</p>
+				<!--<p v-else @click="">保存</p>-->
+			</div>
+		</mt-header>
+		<section class="contanter" style="margin-bottom:0;">
+			<ul>
+				<li>
+					<label class="m-name">随手拍编号</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">隐患编号</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">危险源编号</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">公司</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">厂站</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">网格</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">区域</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">设备作业</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">设备编号</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">照片</label>
+					<span class="img-box">
+						<div><img src="../../../../../assets/images/timg.jpg" alt="" /></div>
+						<div><img src="../../../../../assets/images/timg2.jpg" alt="" /></div>
+					</span>
+				</li>
+				<li>
+					<label class="m-name">描述</label>
+					<span class="m-value">562478950</span>
+				</li>
+				<li>
+					<label class="m-name">创建人</label>
+					<span class="m-value">{{pat_detail.name}}</span>
+				</li>
+				<li>
+					<label class="m-name">创建时间</label>
+					<span class="m-value">{{pat_detail.time}}</span>
+				</li>
+			</ul>
+		</section>
+	</div>
+</template>
+
+<script>
+	import { mapState } from 'vuex'
+	export default {
+		data(){
+			return {
+				
+			}
+		},
+		computed: {
+			...mapState(['pat_detail'])
+		},
+		mounted(){
+			 //var data =this.$route.query.detailData;
+			 //console.log(data)
+		},
+		methods:{
+			
+		},
+	}
+</script>
+
+<style lang="less">
+	.patDetail{
+		section.contanter{
+			padding-bottom: 0;
+			background: #fff;
+			ul{
+				padding-left: 15px;width:100%;height:100%;
+				li{
+					padding: 15px 0;border-bottom: 1px solid #f5f6f7;font-size: 15px;
+					.m-name{color: #666666;display: inline-block;width: 30%;}
+					.m-value{color: #333333;display: inline-block;width: 68%;padding-right: 15px;}
+					.img-box{
+						display: block;width: 100%;padding-top: 10px;
+						div{
+							display: inline-block;width: 48%;height:123px;border-radius: 5px;overflow: hidden;
+							img{width: 100%;}
+						}
+					}
+				}
+				li:last-child{border-bottom: 0;}
+			}
+		}
+	}
+ 
+</style>

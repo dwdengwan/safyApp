@@ -1,0 +1,54 @@
+<template>
+	<div id="my-task" class="tab-main">
+		<div class="c-tabs2 clearfloat average">
+		 	<div class="c-tab2 real-data" :class="{'active':(currentTab=='needDone')}" @click="toggleTab('needDone')">
+		 		<a>待办</a>
+		 		<span class="messageBar">1</span>
+		 	</div>
+
+		 	<div class="c-tab2 count-data" :class="{'active':(currentTab=='alreadyDone')}" @click="toggleTab('alreadyDone')">
+		 		<a>已办</a>
+		 		<span class="messageBar">1</span>
+		 	</div>
+
+		 	<div class="c-tab2 base-data" :class="{'active':(currentTab=='needRead')}" @click="toggleTab('needRead')">
+		 		<a>待阅</a>
+		 		<span class="messageBar">1</span>
+		 	</div>
+		
+			<div class="c-tab2 base-data" :class="{'active':(currentTab=='all')}" @click="toggleTab('all')">
+				<a>全部</a>
+				<span class="messageBar">1</span>
+			</div>
+		</div>
+
+   		<div :is="currentTab" keep-alive></div>
+	</div>
+</template>
+
+<script>
+	import needDone from './myTaskChild/needDone'
+	import alreadyDone from './myTaskChild/alreadyDone'
+	import needRead from './myTaskChild/needRead'
+	import all from './myTaskChild/all'
+	export default {
+	  components: {
+	    needDone,alreadyDone,needRead,all
+	  },
+	  data(){
+		return{
+			currentTab: 'needDone' ,// currentTab 用于标识当前触发的子组件
+			heData:{},
+			num:0
+		}
+	},
+	   methods: {
+	   	toggleTab: function(tab) {
+			   this.currentTab = tab; // tab 为当前触发标签页的组件名
+		},
+	   }
+	 }
+</script>
+
+<style>
+</style>

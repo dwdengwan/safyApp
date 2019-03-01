@@ -1,0 +1,121 @@
+<template>
+	<div>
+		<mt-header fixed title="标题过长会隐藏后面的内容啊哈哈哈哈">
+			<router-link to="/" slot="left">
+				<mt-button icon="back">返回</mt-button>
+			</router-link>
+			<!--<mt-button icon="more" slot="right"></mt-button>-->
+			<router-link to="/" slot="right">
+				<mt-button>分享</mt-button>
+			</router-link>
+		</mt-header>
+		<div id="" class="contanter">
+			<baidu-map ref="bm-view" class="bm-view" :center="center" :zoom="zoom" @ready="handler">
+				
+				<my-overlay v-show="zoomSix" v-for="(item,index) in points" :key="index" :position="{lng: item.lng, lat: item.lat,title:item.title,wid:item.id}" :active="active" @mouseover.native="active = true" @mouseleave.native="active = false"></my-overlay>
+				
+			</baidu-map>
+		</div>
+	</div>
+</template>
+
+<script>
+	import MyOverlay from './MyOverlay.vue'
+	import { mapState } from 'vuex'
+	export default {
+		components: {
+			MyOverlay
+		},
+		data() {
+			return {
+				center: {
+					lng: 108.02,
+					lat: 35.81
+				},
+				zoom: 5,
+				clientHeight:'',
+				active: false,
+				zoomSix: true
+			};
+		},
+		computed: {
+			...mapState(['points', 'ctx'])
+		},
+		mounted() {
+			// 获取浏览器可视区域高度
+		      this.clientHeight =   `${document.documentElement.clientHeight}`  //document.body.clientWidth;
+		      window.onresize = function temp() {
+		        this.clientHeight = `${document.documentElement.clientHeight}`;
+		      };
+		},
+		methods: {
+			/*handleClose() {
+			  alert('close this page');
+			}*/
+			handler({
+				BMap,
+				map
+			}) {
+				console.log(BMap, map)
+				this.center.lng = 108.02 //116.404
+				this.center.lat = 35.81 //39.915
+				this.zoom = 5
+			},
+			changeFixed(clientHeight){  
+		        this.$refs["bm-view"].$el.style.height = (clientHeight-40) + 'px'
+	     },
+		},
+		watch: {
+	      // 如果 `clientHeight` 发生改变，这个函数就会运行
+	      clientHeight: function () {
+	        this.changeFixed(this.clientHeight)
+	      }
+	   }
+	};
+</script>
+
+<style lang="css">
+	/* @component-namespace page {
+    @component header {
+      @descendent main {
+        margin-top: 50px;
+        min-height: 120vh;
+
+        > * {
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }*/
+ .sample2 {
+		width: 120px;
+		height: 50px;
+		line-height: 50px;
+		overflow: hidden;
+		color: #fff;
+		text-align: center;
+		padding: 14px 10px;
+		position: absolute;
+		cursor: pointer;
+	}
+	
+	.sample2.active {
+		background: rgba(0, 0, 0, 0.75);
+		color: #fff;
+	}
+	
+	.sample2>div {
+		width: 40px;
+		height: 28px;
+		margin: 0 auto;
+		background-size: 100%;
+		font-size: 10px;
+		line-height: 22px;
+		background: url(../../assets/images/marker.png) no-repeat;
+		font-size: 10px;
+	}
+	
+	.sample2>div>img {
+		width: 100%;
+	}
+</style>

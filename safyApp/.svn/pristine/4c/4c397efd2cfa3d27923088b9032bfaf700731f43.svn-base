@@ -1,0 +1,210 @@
+<template>
+	<div>
+		<mt-header fixed title="随手拍">
+			<router-link to="/safeCount/safeFun" slot="left">
+				<mt-button icon="back">返回</mt-button>
+			</router-link>
+			<!--<mt-button icon="more" slot="right"></mt-button>-->
+			<div slot="right">
+				<p v-if="!popupVisible" @click="open">刷选</p>
+				<p v-else @click="close">收起</p>
+			</div>
+			<!--<router-link to="" slot="right">
+				<mt-button></mt-button>
+			</router-link>-->
+		</mt-header>
+		<section class="contanter padding-box">
+			<div class="patPage">
+				<ul class="patPage-box">
+					<li v-for="(obj,index) in data" :key="index" @click="goDetail(obj)">
+						<div class="patPage-box-content">
+							<div class="patPage-box-content-left1">
+								<h2>{{obj.name}}</h2>
+								<span>待处理</span>
+							</div>
+							<div class="patPage-box-content-right1">
+								<p>{{obj.message}}</p>
+							</div>
+							<div class="patPage-box-content-left2">
+								<p>{{obj.time}}</p>
+							</div>
+							<div class="patPage-box-content-right2">
+								<p>{{obj.adr}}</p>
+							</div>
+						</div>
+						<div class="patPage-box-icon">
+							<span class="mint-button-icon"><i class="mintui mintui-back"></i></span>
+						</div>
+					</li>
+				</ul>
+				
+			</div>
+		</section>
+		<router-link to="/safeCount/safeFun/page/patDetail/addPat" slot="left">
+			<div class="patPage-fix"></div>
+		</router-link>
+		<mt-popup
+		  v-model="popupVisible"
+		  position="top"
+		  :closeOnClickModal="false">
+		  <div class="patPopup">
+		  	<mt-field label="厂站" placeholder="请输入厂站" v-model="username"></mt-field>
+		  	<mt-field label="网格" placeholder="请输入网格" type="email" v-model="email"></mt-field>
+			<mt-field label="创建时间" placeholder="请输入创建时间" type="select" v-model="password"></mt-field>
+			<mt-field label="创建人" placeholder="请输入创建人" v-model="username"></mt-field>
+			<mt-field label="" style="width: 100%;" placeholder="请输入查找内容" type="textarea" rows="4" v-model="username"></mt-field>
+			<!--<div class="patPage-solid"></div>-->
+			<div class="patPopup-btn">
+				<mt-button type="primary">查找</mt-button>
+			</div>
+		  </div>
+		</mt-popup>
+	</div>
+</template>
+
+<script >
+	export default {
+		name: "pat",
+		data(){
+			return{
+				data:[],
+				popupVisible:false,
+				username: '',
+				email: '',
+				password: '',
+			}
+		},
+		created(){
+			for(let i = 0; i< 10; i++) {
+				this.data.push({
+						name: '黄旭日',
+						message:'楼顶天台有裂缝，排水不畅时会漏水到实验室。',
+						time: '2018-01-01',
+						adr: '场站/网格/区域'
+					})
+				
+				//this.item=JSON.stringify(this.data[i]) 
+				
+			}
+		},
+		mounted(){},
+		methods: {
+		  	open(){
+		  		this.popupVisible = true
+		  	},
+		  	close(){
+		  		this.popupVisible = false
+		  	},
+		  	goDetail(obj){//点击进入详情页面
+		  		this.$store.commit("goPatDetail",obj);
+		  		console.log(obj)
+		  		 this.$router.push({ path: '/safeCount/safeFun/page/patDetail'})
+		  	},
+		},
+	 }
+</script>
+
+<style lang="less">
+	.patPage{
+		width: 100%;
+		background-color: #F5F6F8;
+		.patPage-box{
+			li{
+				margin-top: 10px;
+				width: 100%;
+				height: 110px;
+				background: #fff;
+				display: flex;
+				.patPage-box-content{
+					width: 90%;
+					padding: 10px 0px 10px 15px;
+					display: flex;
+					flex-wrap: wrap;
+					.patPage-box-content-left1{
+						width: 30%;
+						h2{
+							font-weight: normal;
+							font-size: 18px;
+						}
+						span{
+							display: inline-block;
+							font-size: 12px;
+							margin-top: 6px;
+							padding: 0 5px;
+							border: 1px solid #30d0f0;
+							border-radius: 3px;
+							color: #30d0f0;
+						}
+					}
+					.patPage-box-content-left2{
+						width: 30%;
+						color: #8c8c8c;
+						padding-top: 10px;
+					}
+					.patPage-box-content-right1{
+						padding-left: 1%;
+						width: 70%;
+						height: 61px;
+						font-weight: 500;
+						font-size: 14px;
+						overflow:hidden; 
+						text-overflow:ellipsis;
+						display:-webkit-box; 
+						-webkit-box-orient:vertical;
+						-webkit-line-clamp:3;
+					}
+					.patPage-box-content-right2{
+						width: 70%;
+						padding-left: 1%;
+						color: #8c8c8c;
+						padding-top: 10px;
+					}
+				}
+				.patPage-box-icon{
+					width: 10%;
+					line-height: 100px;
+					font-size: 2rem;
+					color: #E1E1E1;
+					text-align: center;
+					span{
+						transform: rotate(180deg);
+					}
+				}
+			}
+			
+		}
+	}
+	.patPage-fix{
+		background-color: transparent;
+		width: 3rem;
+		height: 3.5rem;
+		position: fixed;
+		bottom: 18%;
+		right: 5%;
+		background-image: url('../../../../assets/images/icon.png');
+		background-position: -232px -72px;
+		background-repeat:no-repeat;
+		background-size:457px 300px;
+	}
+	.patPopup{
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		.patPage-solid{
+			width: 100%;
+			border-bottom: 1px solid #eee;
+			margin: 5px 0px;
+		}
+		.patPopup-btn{
+			width: 90%;
+			margin: auto;
+			.mint-button--primary{
+				width: 100%;
+				margin: 15px 0;
+			}
+		}
+		.mint-cell{width: 100% !important;}
+		.mint-cell-wrapper{font-size: 15px;background-image:none ;border-bottom: 1px solid #e9e9eb;}
+		.mint-cell:last-child .mint-cell-wrapper{border-bottom: 0;}
+	}
+</style>
